@@ -11,6 +11,7 @@ import { RaceControlModule } from './race-control';
 import { RmsMenu } from './rms.menu';
 import { RmsPage } from './rms.page';
 import { RaceSettingsComponent } from './race-settings.component';
+import { RaceUploadComponent } from './race-upload.component';
 import { RaceTitleComponent } from './race-title.component';
 
 @NgModule({
@@ -18,11 +19,13 @@ import { RaceTitleComponent } from './race-title.component';
     RmsMenu,
     RmsPage,
     RaceSettingsComponent,
+    RaceUploadComponent,
     RaceTitleComponent,
   ],
   exports: [
     RmsPage,
     RaceSettingsComponent,
+    RaceUploadComponent,
     RaceTitleComponent
   ],
   imports: [

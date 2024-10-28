@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { PopoverController, Platform } from '@ionic/angular';
+import { PopoverController, Platform, ModalController } from '@ionic/angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -16,6 +16,7 @@ import { AppService, ControlUnitService, LoggingService, SpeechService } from '.
 import { LeaderboardItem } from './leaderboard';
 import { RmsMenu } from './rms.menu';
 import { Session } from './session';
+import { RaceUploadComponent } from './race-upload.component';
 
 const compare = {
   'position': (lhs: LeaderboardItem, rhs: LeaderboardItem) => {
@@ -58,6 +59,7 @@ export class RmsPage implements OnDestroy, OnInit {
   private subscription = new Subscription();
 
   constructor(public cu: ControlUnitService, private app: AppService,
+    private mod: ModalController,
     private logger: LoggingService, private settings: AppSettings, private speech: SpeechService,
     private popover: PopoverController, private translate: TranslateService, route: ActivatedRoute)
   {
@@ -404,6 +406,20 @@ export class RmsPage implements OnDestroy, OnInit {
     if (this.options) {
       this.settings.setOptions(Object.assign({}, this.options, {speech: !this.options.speech}));
     }
+  }
+
+  uploadRaceDataV2() {
+    this.mod.create({
+      component: RaceUploadComponent,
+      componentProps: {
+        session: this.session
+      }
+    }).then(modal => {
+      modal.onDidDismiss().then(detail => {
+        console.log(detail)
+      });
+      modal.present();
+    });
   }
 
   toggleYellowFlag() {

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span translate>Race history</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <h1>Race history</h1>
+
+  <ion-item>
+    <ion-label>Select Race</ion-label>
+    <ion-select placeholder="Choose a document" (ionChange)="onDocumentSelect($event)">
+      <ion-select-option *ngFor="let doc of documents" [value]="doc.id">
+        {{ doc.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div *ngIf="selectedDocument" class="chart-container">
+    <h2>{{selectedDocument.name}}</h2>
+
+    <canvas baseChart
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [type]="'line'">
+    </canvas>
+  </div>
+</ion-content>

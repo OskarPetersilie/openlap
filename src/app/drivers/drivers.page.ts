@@ -8,19 +8,25 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { Observable } from 'rxjs';
 
-import { AppSettings, Driver } from '../app-settings';
+import { AppSettings, Driver, Car, PB_ENDPOINT, PB_AUTH_KEY } from '../app-settings';
 import { AppService, ControlUnitService, LoggingService, SpeechService } from '../services';
 
 import { ColorComponent } from './color.component';
 
 import { ControlUnitButton } from '../carrera';
+import PocketBase, { LocalAuthStore } from 'pocketbase';
 
 @Component({
   templateUrl: 'drivers.page.html'
 })
 export class DriversPage implements OnDestroy, OnInit {
 
+  private pb: PocketBase;
   drivers: Driver[];
+
+  cars: Car[] = [];
+  loading = true;
+  error: string | null = null;
 
   orientation: Observable<string>;
 
@@ -36,20 +42,71 @@ export class DriversPage implements OnDestroy, OnInit {
     private translate: TranslateService) 
   {
     this.orientation = app.orientation;
+
+    
+    this.pb = new PocketBase(PB_ENDPOINT, new LocalAuthStore(PB_AUTH_KEY));
+    this.settings.getOpeworksPocketbaseConfig().pipe(take(1)).toPromise().then(e => {
+      this.pb.beforeSend = function (url, options) {
+        options.headers = Object.assign({}, options.headers, { 'x-token': e});
+        return { url, options };
+      };
+    }).catch(error => {
+      this.logger.error('Error getting pocketbase', error);
+    });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.settings.getDrivers().pipe(take(1)).toPromise().then(drivers => {
       this.drivers = drivers;
     }).catch(error => {
       this.logger.error('Error getting drivers', error);
     });
+
+    try {
+      this.loading = true;
+      const records = await this.pb.collection('cars').getFullList({
+        sort: 'name',
+      });
+      
+      this.cars = records.map(record => ({
+        id: record.id,
+        name: record['name'],
+        code: record['code'],
+        speed: record['speed'],
+        fuel: record['fuel'],
+        brake: record['brake'],
+        color: record['color']
+      }));
+    } catch (err) {
+      console.error('Error loading cars:', err);
+      this.error = 'Failed to load cars';
+    } finally {
+      this.loading = false;
+    }
   }
 
   ngOnDestroy() {
     this.settings.setDrivers(this.drivers).catch(error => {
       this.logger.error('Error setting drivers', error);
     });
+  }
+
+  onCarSelect(event: any, driver: Driver) {
+    // The selected value is in event.detail.value
+    const selectedCarId = event.detail.value;
+    const car = this.cars.find(car => car.id === selectedCarId);
+    if (car) {
+      driver.car = car;
+      driver.name = `${driver.name.split("#")[0]}#${car.code}`;
+    }else {
+      driver.car = undefined;  // Clear the car if none selected
+      driver.name = `${driver.name.split("#")[0]}`;
+    }
+  }
+
+  // Add this method to get the selected car's ID for the ion-select
+  getSelectedCarId(driver: Driver): string | undefined {
+    return driver.car?.id;
   }
 
   getCode(name: string, id: number) {

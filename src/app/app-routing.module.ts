@@ -4,6 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { RmsPage } from './rms';
 import { DriversPage } from './drivers';
 import { TuningPage } from './tuning';
+import { HistoryPage } from './history/history.page';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'rms/:mode',
     component: RmsPage
+  },
+  {
+    path: 'history',
+    component: HistoryPage
   },
   {
     path: 'drivers',

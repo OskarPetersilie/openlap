@@ -33,6 +33,7 @@ import { MenuModule } from './menu';
 import { RmsModule } from './rms';
 import { SharedModule } from './shared';
 import { TuningModule } from './tuning';
+import { HistoryModule } from './history';
 
 import { LoggingService } from './services';
 
@@ -81,6 +82,7 @@ export function swRegistrationOptions(platform: Platform) {
     }),
     BackendModule,
     DriversModule,
+    HistoryModule,
     MenuModule,
     RmsModule,
     SharedModule,

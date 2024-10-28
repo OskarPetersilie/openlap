@@ -5,6 +5,9 @@
     </ion-buttons>
     <race-title [mode]="mode" [laps]="lapcount | async" [time]="session?.timer | async" [finished]="session?.finished | async"></race-title>
     <ion-buttons slot="end">
+      <ion-button (click)="uploadRaceDataV2()">
+        <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+      </ion-button>
       <ion-button *ngIf="(orientation | async) == 'landscape'" (click)="toggleSpeech()">
         <ion-icon slot="icon-only" [name]="options?.speech ? 'volume-high-sharp' : 'volume-mute-sharp'"></ion-icon>
       </ion-button>

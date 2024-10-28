@@ -120,7 +120,7 @@ class DemoPeripheral implements Peripheral {
 
   private config = {
     numCars: 8,
-    numSectors: 3,
+    numSectors: 1,
     maxStartTime: 1500,
     minSectorTime: 3000,
     maxSectorTime: 4000

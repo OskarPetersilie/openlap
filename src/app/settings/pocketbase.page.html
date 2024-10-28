@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span translate>Opeworks Pocketbase Settings</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item >
+      <ion-input clearInput label="pocketbase_auth_header"
+        [placeholder]="'pocketbase_auth_header'" 
+        [(ngModel)]="pocketbase_auth_header"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>

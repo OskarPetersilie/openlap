@@ -30,6 +30,24 @@
         enterkeyhint="done"
       >
       </ion-input>
+      
+      <ion-select
+        placeholder="Select car"
+        cancelText="{{'Cancel' | translate}}"
+        okText="{{'OK' | translate}}"
+        (ionChange)="onCarSelect($event, driver)"
+        [value]="getSelectedCarId(driver)"
+        [disabled]="loading">
+        <ion-select-option
+          [value]="''">
+          -- {{'None' | translate}} --
+        </ion-select-option>
+        <ion-select-option *ngFor="let car of cars" 
+          [value]="car.id">
+          {{ car.name }}
+        </ion-select-option>
+      </ion-select>
+
       <ion-buttons slot="end">
         <ion-note *ngIf="(orientation | async) == 'landscape'">{{driver.code || '#' + (id + 1)}}</ion-note>
         <ion-button *ngIf="(orientation | async) == 'landscape'" fill="clear" (click)="speak(id)">

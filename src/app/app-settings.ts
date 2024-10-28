@@ -49,6 +49,8 @@ const NOTIFICATIONS = {
   timeout: true,
   yellowflag: true
 };
+export const PB_ENDPOINT = "http://localhost:8102";
+export const PB_AUTH_KEY = "carrera_pb_auth";
 
 export class Connection {
   type?: string;
@@ -82,6 +84,17 @@ export interface Driver {
   name?: string;
   code?: string;
   color: string;
+  car?: Car;
+}
+
+export interface Car {
+  id: string;
+  name?: string;
+  code?: string;
+  color?: string;
+  speed?: number;
+  brake?: number;
+  fuel?: number;
 }
 
 export class RaceOptions {
@@ -165,6 +178,14 @@ export class AppSettings {
 
   setNotifications(value: {[key: string]: Notification}) {
     return this.settings.set('notifications', value);
+  }
+
+  setOpeworksPocketbaseConfig(value: string) {
+    return this.settings.set('pocketbase_auth_header', value);
+  }
+
+  getOpeworksPocketbaseConfig(): Observable<string> {
+    return this.settings.observe('pocketbase_auth_header')
   }
 
   getOptions() {

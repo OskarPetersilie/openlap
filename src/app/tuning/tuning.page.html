@@ -34,12 +34,15 @@
         {{model.id + 1}}
       </outline>
       <ng-container [ngSwitch]="orientation | async">
-        <ion-label *ngSwitchCase="'landscape'">
+        <ion-label >
           {{d[model.id]?.name || (placeholder | translate:{number: model.id + 1})}}
         </ion-label>
-        <ion-label *ngSwitchCase="'portrait'">
-          {{d[model.id]?.code || '#' + (model.id + 1)}}
-        </ion-label>
+        <ion-button (click)="saveCarDefaults(model)">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="loadCarDefaults(model)">
+          <ion-icon name="refresh-outline"></ion-icon>
+        </ion-button>
       </ng-container>
       <ng-container [ngSwitch]="(options | async)?.cumode">
         <ng-container *ngSwitchCase="false">

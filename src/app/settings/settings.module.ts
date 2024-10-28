@@ -15,6 +15,7 @@ import { LoggingPage } from './logging.page';
 import { NotificationsPage } from './notifications.page';
 import { SettingsPage } from './settings.page';
 import { VoicePage } from './voice.page';
+import { PocketbasePage } from './pocketbase.page';
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
   {
     path: 'voice',
     component: VoicePage
+  },
+  {
+    path: 'pocketbase',
+    component: PocketbasePage
   }
 ];
 
@@ -56,6 +61,7 @@ const routes: Routes = [
     LoggingPage,
     NotificationsPage,
     VoicePage,
+    PocketbasePage,
     SettingsPage
   ],
   exports: [
