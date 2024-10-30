@@ -18,7 +18,9 @@ interface Race {
 }
 
 @Component({
-  templateUrl: 'history.page.html'
+  selector: 'app-race-grid',
+  templateUrl: 'history.page.html',
+  styleUrls: ['./history.page.scss']
 })
 export class HistoryPage implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
@@ -106,6 +108,16 @@ export class HistoryPage implements OnInit {
     return sectorSums;
   }
 
+  formatTime(ms: number): string {
+    if (!ms) return '-';
+    
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    const milliseconds = ms % 1000;
+
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+  }
+
   private updateChart(document: Race) {
     const labels = [...new Array(document.raceData[0].laps)].map((e, i) => `Runde ${i}`)
     this.lineChartData.labels = labels;
@@ -119,6 +131,7 @@ export class HistoryPage implements OnInit {
         label: driverRaceData.name,
         fill: false,
         borderColor: driverRaceData.driverColor || `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
+        backgroundColor: driverRaceData.driverColor || `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
         tension: 0.1
       }
     })

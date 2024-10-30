@@ -1,5 +1,59 @@
 .chart-container {
-    margin-top: 20px;
-    height: 400px;
-    width: 100%;
+  margin-top: 20px;
+  width: 100%;
+}
+
+ion-grid {
+  padding: 10px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.driver-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  padding-left: 10px;
+  border-left: 6px solid;
+  /* Color will be set dynamically */
+}
+
+.status-chip {
+  margin: 0;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ion-color-light);
+  font-weight: bold;
+  font-size: 1.2em;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.pit-status {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+
+  ion-chip {
+    min-width: 80px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  ion-col {
+    margin-bottom: 10px;
+  }
 }

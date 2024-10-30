@@ -49,7 +49,8 @@ const NOTIFICATIONS = {
   timeout: true,
   yellowflag: true
 };
-export const PB_ENDPOINT = "http://localhost:8102";
+export const PB_ENDPOINT = "https://vs3.oskar1504.dev/openlap_pocketbase";
+// export const PB_ENDPOINT = "http://localhost:8102";
 export const PB_AUTH_KEY = "carrera_pb_auth";
 
 export class Connection {

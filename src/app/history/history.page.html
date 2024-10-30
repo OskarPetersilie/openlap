@@ -22,9 +22,58 @@
     </ion-select>
   </ion-item>
 
+
   <div *ngIf="selectedDocument" class="chart-container">
     <h2>{{selectedDocument.name}}</h2>
+    <ion-grid *ngIf="selectedDocument?.raceData">
+      <ion-row class="header-row">
+        <ion-col size="12" size-md="3" *ngFor="let player of selectedDocument.raceData">
+          <ion-card>
+            <!-- Driver Name Header -->
+            <ion-card-header>
+              <ion-card-title>
+                <div class="header-content">
+                  <div class="driver-name" [style.border-left-color]="player.driverColor">
+                    {{ player.name }}
+                  </div>
+                  <ion-chip [color]="player.finished ? 'success' : 'medium'" class="status-chip">
+                    <ion-label>FINISHED</ion-label>
+                  </ion-chip>
+                </div>
+              </ion-card-title>
+            </ion-card-header>
 
+            <!-- Driver Stats -->
+            <ion-card-content>
+              <!-- Laps -->
+              <div class="stat-row">
+                <ion-text color="light">Laps</ion-text>
+                <ion-text color="light" class="stat-value">{{ player.laps }}</ion-text>
+              </div>
+
+              <!-- Pit Stops -->
+              <div class="stat-row">
+                <ion-text color="light">Pit Stops</ion-text>
+                <ion-text color="light" class="stat-value">{{ player.pits }}</ion-text>
+              </div>
+
+              <!-- Best Lap -->
+              <div class="stat-row">
+                <ion-text color="light">Best Lap</ion-text>
+                <ion-text color="light" class="stat-value">{{ formatTime(player.best[0]) }}</ion-text>
+              </div>
+
+              <!-- Race Time -->
+              <div class="stat-row">
+                <ion-text color="light">Total Time</ion-text>
+                <ion-text color="light" class="stat-value">{{ formatTime(player.time) }}</ion-text>
+              </div>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     <canvas baseChart
       [data]="lineChartData"
       [options]="lineChartOptions"
